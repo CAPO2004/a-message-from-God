@@ -1,0 +1,90 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رسالة من الله</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>رسالة من الله</h1>
+        <p>اختر شعورك الآن:</p>
+        <div class="emotions">
+            <button class="emotion-btn" data-emotion="القلق">القلق</button>
+            <button class="emotion-btn" data-emotion="الحزن">الحزن</button>
+            <button class="emotion-btn" data-emotion="السعادة">السعادة</button>
+            <button class="emotion-btn" data-emotion="الوحدة">الوحدة</button>
+            <button class="emotion-btn" data-emotion="الخوف">الخوف</button>
+            <button class="emotion-btn" data-emotion="التعب النفسي">التعب النفسي</button>
+            <button class="emotion-btn" data-emotion="الذنب">الذنب</button>
+            <button class="emotion-btn" data-emotion="الضعف">الضعف</button>
+            <button class="emotion-btn" data-emotion="الضياع">الضياع</button>
+            <button class="emotion-btn" data-emotion="الندم">الندم</button>
+            <button class="emotion-btn" data-emotion="الشك">الشك</button>
+            <button class="emotion-btn" data-emotion="الهم">الهم</button>
+            <button class="emotion-btn" data-emotion="الفراغ">الفراغ</button>
+            <button class="emotion-btn" data-emotion="الرضا">الرضا</button>
+            <button class="emotion-btn" data-emotion="الطمأنينة">الطمأنينة</button>
+            <button class="emotion-btn" data-emotion="الإيمان">الإيمان</button>
+            <button class="emotion-btn" data-emotion="الأمل">الأمل</button>
+            <button class="emotion-btn" data-emotion="الحب في الله">الحب في الله</button>
+            <button class="random-verse-btn">آية عشوائية تطمني</button>
+        </div>
+
+        <div class="verse-section" id="verse-section" style="display: none;">
+            <p id="verse-text"></p>
+            <p id="verse-reference"></p>
+            <audio id="verse-audio" controls></audio>
+            <button class="share-btn">مشاركة الآية</button>
+        </div>
+
+        <div class="reciter-section">
+            <label for="reciter-select">اختر المقرئ:</label>
+            <div class="reciter-grid" id="reciter-grid"></div>
+        </div>
+
+        <button class="toggle-mode">تبديل الوضع</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
