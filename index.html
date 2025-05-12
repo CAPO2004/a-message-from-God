@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رسالة من الله</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>رسالة من الله</h1>
+        <p>اختر شعورك الآن:</p>
+        <div class="emotions">
+            <button class="emotion-btn" data-emotion="القلق">القلق</button>
+            <button class="emotion-btn" data-emotion="الحزن">الحزن</button>
+            <button class="emotion-btn" data-emotion="السعادة">السعادة</button>
+            <button class="emotion-btn" data-emotion="الوحدة">الوحدة</button>
+            <button class="emotion-btn" data-emotion="الخوف">الخوف</button>
+            <button class="emotion-btn" data-emotion="التعب النفسي">التعب النفسي</button>
+            <button class="emotion-btn" data-emotion="الذنب">الذنب</button>
+            <button class="emotion-btn" data-emotion="الضعف">الضعف</button>
+            <button class="emotion-btn" data-emotion="الضياع">الضياع</button>
+            <button class="emotion-btn" data-emotion="الندم">الندم</button>
+            <button class="emotion-btn" data-emotion="الشك">الشك</button>
+            <button class="emotion-btn" data-emotion="الهم">الهم</button>
+            <button class="emotion-btn" data-emotion="الفراغ">الفراغ</button>
+            <button class="emotion-btn" data-emotion="الرضا">الرضا</button>
+            <button class="emotion-btn" data-emotion="الطمأنينة">الطمأنينة</button>
+            <button class="emotion-btn" data-emotion="الإيمان">الإيمان</button>
+            <button class="emotion-btn" data-emotion="الأمل">الأمل</button>
+            <button class="emotion-btn" data-emotion="الحب في الله">الحب في الله</button>
+            <button class="random-verse-btn">آية عشوائية تطمني</button>
+        </div>
+
+        <div class="verse-section" id="verse-section" style="display: none;">
+            <p id="verse-text"></p>
+            <p id="verse-reference"></p>
+            <audio id="verse-audio" controls></audio>
+            <button class="share-btn">مشاركة الآية</button>
+        </div>
+
+        <div class="reciter-section">
+            <label for="reciter-select">اختر المقرئ:</label>
+            <div class="reciter-grid" id="reciter-grid"></div>
+        </div>
+
+        <button class="toggle-mode">تبديل الوضع</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
